@@ -65,15 +65,12 @@ class Sankari:
     :type rohkeus: int
     :ivar katseen_voima: sankarin katseen voimakkuus, arvotaan
     :type katseen_voima: int
-    """
-    """Luokka joka kuvaa sankarin"""
+    Luokka joka kuvaa sankarin"""
     def __init__(self,nimi):
+        """konstruktori."""
         self.nimi = nimi
-        """Kysytään sankarin nimeä"""
-        self.rohkeus = random.randint(9, 10)
-        """arvotaan rohkeus"""
+        self.rohkeus = random.randint(9, 10)  
         self.katseen_voima = random.randint(3, 9)
-        """arvotaan katseen voima"""
     def arvo_hurraus(self):
         """Palauttaa satunnaisen hurraushuudahduksen.
 
