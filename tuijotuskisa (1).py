@@ -59,17 +59,30 @@ class Peikko:
 
 class Sankari:
     """
-    :type katseen_voima: int
+    :ivar nimi: sankarin nimi
+    :type nimi: str
+    :ivar rohkeus: sankarin rohkeus, arvotaan
     :type rohkeus: int
-    
+    :ivar katseen_voima: sankarin katseen voimakkuus, arvotaan
+    :type katseen_voima: int
+    """
     """Luokka joka kuvaa sankarin"""
-    def __init__(self):
-        self.nimi = input("Mikä nimi?")
+    def __init__(self,nimi):
+        self.nimi = nimi
         """Kysytään sankarin nimeä"""
-        self.rohkeus = random.randint(3, 10)
+        self.rohkeus = random.randint(9, 10)
         """arvotaan rohkeus"""
-        self.katseen_voima = random.randint(3, 4)
+        self.katseen_voima = random.randint(3, 9)
         """arvotaan katseen voima"""
+    def arvo_hurraus(self):
+        """Palauttaa satunnaisen hurraushuudahduksen.
+
+        :return: hurraava huudahdus
+        :rtype: str
+        """
+        sanat = ["Jee", "Jipii", "Jes", "Hipii", "Hurraa"]
+        return random.choice(sanat)
+        
         
 
 
