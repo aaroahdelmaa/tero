@@ -1,6 +1,33 @@
 import random
 import time
 
+class Olento:
+    """Luokka, joka kuvaa olennon
+
+    
+    :type nimi: str
+    :ivar rohkeus: olion rohkeus, arvotaan
+    :type rohkeus: int
+    :ivar katseen_voima: olion katseen voimakkuus, arvotaan
+    :type katseen_voima: int
+    Julkiset metodit
+        arvo_hurraus()"""
+    def __init__(self):
+        """Konstruktori"""
+        self.nimi = nimi
+        self.rohkeus = arvo_rohkeus(a, b)
+        self.katseen_voima = arvo_katseen_voima(a, b)
+
+    def arvo_hurraus(self):
+        pass
+
+    def arvo_rohkeus(a, b):
+        rohkeus = random.randint(a, b)
+        return rohkeus
+
+    def arvo_katseen_voima(a, b):
+        katseen_voima = random.randint(a, b)
+        return voima
 
 class Peikko:
     """Luokka, joka kuvaa Peikon.
@@ -57,7 +84,7 @@ class Peikko:
         return self._arvo_sanat(self.RIEMUTAVUT, 8, " ", 0.7)
 
 
-class Sankari:
+class Sankari(Olento):
     """
     :ivar nimi: sankarin nimi
     :type nimi: str
@@ -68,9 +95,7 @@ class Sankari:
     Luokka joka kuvaa sankarin"""
     def __init__(self,nimi):
         """konstruktori."""
-        self.nimi = nimi
-        self.rohkeus = random.randint(9, 10)  
-        self.katseen_voima = random.randint(3, 9)
+        super().__init__(nimi, rohkeus = arvo_rohkeus(3, 6), katseen_voima = arvo_katseen_voima(3, 6)) 
     def arvo_hurraus(self):
         """Palauttaa satunnaisen hurraushuudahduksen.
 
