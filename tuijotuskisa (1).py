@@ -58,10 +58,18 @@ class Peikko:
 
 
 class Sankari:
+    """
+    :type katseen_voima: int
+    :type rohkeus: int
+    
     """Luokka joka kuvaa sankarin"""
     def __init__(self):
         self.nimi = input("Mikä nimi?")
         """Kysytään sankarin nimeä"""
+        self.rohkeus = random.randint(3, 10)
+        """arvotaan rohkeus"""
+        self.katseen_voima = random.randint(3, 4)
+        """arvotaan katseen voima"""
         
 
 
