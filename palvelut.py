@@ -1,150 +1,154 @@
 import random
 
-
-
-class Asiakas():
-    """Luokka, joka kuvaa Asiakkaan.
-    :ivar nimi: Asiakkaan nimi
-    :type nimi: str
-    :ivar ika: Asiakkaan ikä
-    :type ika: int
+class Asiakas:
+    """Luokka asettaa asiakkaalle numeron, nimen, iän ja luo numeron.
+    Julkiset methodit
+        set_nimi()
+        set_ika()
+        get_nimi()
+        get_ika()
+        get_asiakasnumero()
     """
-    
     def __init__(self, nimi, ika):
-        """Konstruktori
+        """Konstruktorissa annetaan muuttujat, jotka peritään myöhemmin.
+        :ivar asiakasnumero: asiakkaan puhelin numero
+        :type asiakasnumero: int[]
+        :ivar nimi: asiakkaan nimi
+        :type nimi: str
+        :ivar ika: asiakkaan ikä
+        :type ika: int
         """
-        self.nimi= nimi
-        self.ika = ika
-
-    def get_nimi(self):
-        return self.nimi
-        """funktio joka palauttaa nimen
-        type nimi: str
-        """
-
-    def set_nimi(self, uusinimi):
-        try:
-            if uusinimi != "":
-                self.nimi= uusinimi
-        except ValueError:
-            raise ValueError("Kannattaa antaa uusi nimi")
-        """funktio joka asettaa nimen arvon tilalle uuden nimen
-        type uusinimi: str
-        """
+        self.__asiakasnumero = self.__luo_nro()
+        self.__nimi = nimi
+        self.__ika = ika
         
+    def __luo_nro(self):
+        """Satunnaisesti arvoo asiakkaan puhelinnumeron.
+        :ivar numero: lista johon pistetään arvottu puhelinnumero
+        :type numero: int[]
+        """
+        numero = []
+        numero.append(random.randint(0, 99))
+        numero.append(random.randint(0, 999))
+        numero.append(random.randint(0, 999))
+        return numero
+
+    def set_nimi(self, nimi):
+        """Jos bool on True, se antaa nimen muuttujalle.
+        Jos bool on tyhjä se on False, nostaa virheen ja kysyy nimeä uudestaan.
+        :param nimi: asiakkaan nimi
+        :type nimi: str
+        """
+        if bool(nimi):
+            self.nimi = nimi
+        else:
+            raise ValueError('Uusi nimi on annettava.')
+
+    def set_ika(self, ika):
+        """Jos type on int, se antaa nimen muuttujalle.
+        Jos type ei ole int, se on False. Nostaa virheen ja kysyy nimeä uudestaan.
+        :param ika: asiakkaan ikä
+        :type ika: int
+        """
+        if type(ika) is int:
+            self.ika = ika
+        else:
+            raise ValueError('Virhe! Anna ika uudestaan.')
+    def get_nimi(self):
+        """Palautetaan __nimi kun sitä kutsutaan.
+        """
+        return self.__nimi
 
     def get_ika(self):
-        return self.ika
-        """funktio joka palauttaa Asiakkaan iän
-        type ika: str"""
-
-    def set_ika(self, uusi_ika):
-        try:
-            if uusi_ika != "":
-                self.ika = uusi_ika
-        except ValueError:
-            raise ValueError("Kannattaa antaa uusi ikä")
-        """Setteri funktio joka asettaa iän arvon tilalle uuden iän
-        type uusi_ika: str"""
-        
-            
+        """Sama kuin get_nimi(), mutta annetaan ika muuttuja.
+        """
+        return self.__ika
     
-    def _luo_nro(self):
-
-        nro1 = random.randint(0, 9)
-        nro2 = random.randint(0, 9)
-        nro3 = random.randint(0, 9)
-        nro4 = random.randint(0, 9)
-        nro5 = random.randint(0, 9)
-        nro6 = random.randint(0, 9)
-        nro7 = random.randint(0, 9)
-        nro8 = random.randint(0, 9)
-
-        asiakasnro = f'{nro1}{nro2}-{nro3}{nro4}{nro5}-{nro6}{nro7}{nro8}'
-        return asiakasnro
-        """Funktio joka palauttaa 8 eri numeroa satunnaisesti 0 ja 9 väliltä
-        type nro1-nro8: int""" 
-
-    def get_asiakasnro(self):
-        return asiakasnro
-        """funktio joka palauttaa asiakasnumeron
-        type asiakasnro: str f"""
-
-
-
-class Palvelu():
-    def __init__(self, tuotenimi, asiakkaat=[]):
-        """Konstruktori
+    def get_asiakasnumero(self):
+        """Palauttaa asiakasnumeron kun sitä kutsutaan.
         """
-        self.tuotenimi=tuotenimi
-        self.asiakkaat=[]
+        return f'{self.__asiakasnumero[0]:02}-{self.__asiakasnumero[1]:03}-{self.__asiakasnumero[2]:03}'
 
-    def __luo_asiakasrivi(self, Asiakas):
-         print(f'{Asiakas.get_nimi()},{Asiakas.get_asiakasnro()}, on {Asiakas.get_ika()}-vuotias')
-         """Luo asiakasrivin käyttämällä get metodeja
-        Asiakas type: class
+
+class Palvelu:
+    """Luokalla hallitaan asiakas listaa.
+    Julkiset methodit
+        lisaa_asiakas()
+        poista_asiakas()
+        get_tuotenimi()
+        tulosta_asiakkaat()
+    """
+    def __init__(self, tuotenimi):
+        """Konstruktori pistetään lista, jota käytetään muissa määritelmissä.
+        :ivar __asiakkaat: Kaikki asiakkaiden tiedot tänne.
+        :type __asiakkaat: list
+        :ivar tuotenimi: Pistetään tuotenimi tänne.
+        :type tuotenimi: str
         """
+        self.tuotenimi = tuotenimi
+        self.__asiakkaat = []
 
-    def lisaa_asiakas(self, Asiakas):
-        asiakas = input("Anna Asiakas: ")
+    def lisaa_asiakas(self, asiakas):
+        """Liittää nimen ja iän asiakas listaan. Jos huomataan että on virheellinen, siitä ilmoitetaan.
+        """
+        if bool(asiakas):
+            self.__asiakkaat.append(asiakas)
+        else:
+            raise ValueError('Asiakas on annettava.')
+
+    def poista_asiakas(self, asiakas):
+        """Poistetaan kutsunnassa asiakkaan nimi ja ika. Jos ei olekkaan asiakasta olemassa, ohitetaan virhe.
+        """
         try:
-            if asiakas == True:
-                self.asiakkaat.append(asiakas)
+            self.__asiakkaat.remove(asiakas)
         except ValueError:
-            raise ValueError ("Kannattaa antaa uusi asiakas")
-        """Lisää annetun asiakkaan asiakkaat listaan ja nostaa ValueErrorin jos ei anneta asiakasta
-        type asiakas:: str
-        """
-            
+            pass
 
-    def poista_asiakas(self, Asiakas):
-        asiakas = input("Anna Asiakas: ")
-        try:
-            if asiakas == True:
-                self.asiakkaat.remove(asiakas)
-        except ValueError:
-            raise ValueError ("Kannattaa antaa uusi asiakas")
-        """Poistaan annetun asiakkaan asiakaat listasta ja nostaa ValueErrorin jos ei anneta asiakasta
-        type asiakas: str
+    def _luo_asiakasrivi(self, asiakas):
+        """Palauttaa kutsunnasta asiakkaan nimi, asiakasnumero ja ika.
         """
-
+        return f'{Asiakas.get_nimi(asiakas)} ({Asiakas.get_asiakasnumero(asiakas)}) on {Asiakas.get_ika(asiakas)}-vuotias.'
+    
     def tulosta_asiakkaat(self):
-        print(self.__luo_asiakasrivi())
-        """Tulostaa luodun asiakasrivin käyttämällä luo_asiakasrivi metodia
+        """Tulostaa lopulta asiakkaan tiedot.
         """
+        print("Tuotteen " + self.tuotenimi + " asiakkaat ovat")
+        for asiakas in self.__asiakkaat:
+            print(self._luo_asiakasrivi(asiakas))
+        print()
 
 
 class ParempiPalvelu(Palvelu):
-    def __init__(self, tuotenimi, edut=[]):
-        """Konstruktori
+    """Luokassa käsitellään tuotenimeä ja sen etuja.
+    Julkiset metodit
+        lisaa_etu()
+        poista_etu()
+        tulosta_edut()
+    """
+    def __init__(self, tuotenimi):
+        """Konstruktorissa peritään tuotenimi Palvelu luokalta.
+        :ivar __edut: Tuotenimen edut.
+        :type __edut: str[]
         """
         super().__init__(tuotenimi)
-        self.edut=[]
-
+        self.__edut = []
+    
     def lisaa_etu(self, etu):
-        etu = input("Anna Etu: ")
-        try:
-            if etu == True:
-                self.edut.append(self, etu)
-        except ValueError:
-            raise ValueError ("Anna uusi etu")
-        """Lisää edun edut listaan ja jos ei anneta arvoa nostaa ValueErrorin
-        type etu: str
+        """Liitetään kutsunnassa pistetty etu listaan.
         """
+        self.__edut.append(etu)
 
     def poista_etu(self, etu):
-        etu = input("Anna Etu: ")
+        """Poistetaan kutsunnassa pistetty etu listasta. Jos ei ole olemassa, virhe ohitetaan.
+        """
         try:
-            if etu == True:
-                self.edut.remove(asiakas)
-        except ValueError:
-            raise ValueError ("Anna uusi etu")
-        """Poistaa edun edut listasta ja jos ei anneta arvoa nostaa ValueErrorin
-        type etu: str
-        """
+            self.__edut.remove(etu)
+        except:
+            pass
 
-    def tulosta_edut():
-        print(edut)
-        """Tulostaa edut listan
-        type edut: list
+    def tulosta_edut(self):
+        """Lopulta tulostaa tuotenimi ja sen edut kutsunnassa.
         """
+        print("Tuotteen " + self.tuotenimi + " edut ovat:")
+        for etu in self.__edut:
+            print(f'{etu}')
